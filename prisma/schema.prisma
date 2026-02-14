@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Mahasiswa {
+  id Int @id @default(autoincrement())
+  name String
+  nim Int @unique
+  status status @default(alpa)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum status {
+  hadir
+  izin
+  alpa
+}
+
+// model Kelas {
+//   id Int @id @default(autoincrement())
+//   name String
+//   createdAt DateTime @default(now())
+//   Absens Absen[]
+// }
+
+// model Absen {
+//   id Int @id @default(autoincrement())
+//   mahasiswaId Int
+//   kelasId Int
+//   date DateTime
+//   status String
+
+//   mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
+//   kelas Kelas @relation(fields: [kelasId], references: [id])
+
+//   @@unique([mahasiswaId, kelasId, date])
+// }
