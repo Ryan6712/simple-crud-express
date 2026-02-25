@@ -1,12 +1,14 @@
 import {
     getAll,
     getById,
-    create,
     updateById,
+    create,
     deleteById
-} from "../service/mahasiswaService.js"
+} from "../service/kelasService.js"
 
-export const getAllMahasiswa = async (req, res) => {
+
+
+export const getAllKelas = async (req, res) => {
     try {
         const responses = await getAll();
         res.status(200).json(responses);
@@ -16,7 +18,7 @@ export const getAllMahasiswa = async (req, res) => {
 };
 
 
-export const getMahasiswaById = async (req, res) => {
+export const getKelasById = async (req, res) => {
     const id = Number(req.params.id)
     try {   
         const responses = await getById(id);
@@ -27,34 +29,33 @@ export const getMahasiswaById = async (req, res) => {
 }
 
 
-export const createMahasiswa = async (req, res) => {
+export const createKelas = async (req, res) => {
     try {   
         const responses = await create(req.body);
-        res.status(200).json({msg : "Mahasiswa created", responses});
+        res.status(200).json(responses);
     } catch (error) {
-        if(error.code == "P2002") res.status(400).json({ msg : "Bad request User already exist", err : error.message})
         res.status(400).json({ msg : error.message});
     }
 }
 
 
-export const updateMahasiswa = async (req, res) => {
+export const updateKelas = async (req, res) => {
     const id = Number(req.params.id)
-    const { name } = req.body;
+    const { name, status } = req.body;
     try {   
-        const responses = await updateById(id, name);
-        res.status(200).json({ msg : "mahasiswa updated", update : responses});
+        const responses = await updateById(id, name, status);
+        res.status(200).json(responses);
     } catch (error) {
         res.status(404).json({ msg : error.message});
     }
 }
 
 
-export const deleteMahasiswa = async (req, res) => {
+export const deleteKelas = async (req, res) => {
     const id = Number(req.params.id)
     try {   
         const responses = await deleteById(id);
-        res.status(200).json({msg: "users deleted", deletedId : responses.id});
+        res.status(200).json({msg: "kelas deleted", deletedId : responses.id});
     } catch (error) {
         res.status(404).json({ msg : error.message});
     }

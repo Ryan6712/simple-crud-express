@@ -1,7 +1,7 @@
 import prisma from "../config/prisma.js";
 
 export const getAll = async () => {
-    return await prisma.mahasiswa.findMany({
+    return await prisma.kelas.findMany({
         where: {
             deletedAt : null
         }
@@ -9,7 +9,7 @@ export const getAll = async () => {
 }
 
 export const getById = async (id) => {
-    return await prisma.mahasiswa.findUnique({
+    return await prisma.kelas.findFirst({
         where : {
             id,
             deletedAt : null
@@ -19,17 +19,16 @@ export const getById = async (id) => {
 
 
 export const create = async (data) => {
-    const { name, nim } = data
-    return await prisma.mahasiswa.create({
+    const { name } = data
+    return await prisma.kelas.create({
         data: {
-            name,
-            nim
+            name
         }
     });
 };
 
 export const updateById = async (id, name) => {
-    return await prisma.mahasiswa.update({
+    return await prisma.kelas.update({
         where: {
             id,
             deletedAt : null
@@ -42,7 +41,7 @@ export const updateById = async (id, name) => {
 
 export const deleteById = async (id) => {
     const now = new Date()
-    const result = await prisma.mahasiswa.updateMany({
+    const result = await prisma.kelas.updateMany({
         where: {
             id
         },
@@ -51,7 +50,7 @@ export const deleteById = async (id) => {
         }
     });
 
-    if(result.count === 0) throw new Error("gagal hapus user tidak ada atau sudah terhapus")
+    if(result.count === 0) throw new Error("Kelas tidak ditemukan atau sudah dihapus")
 
     return result
 };

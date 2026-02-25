@@ -1,0 +1,18 @@
+import express from "express";
+import {
+    getAllKelas,
+    getKelasById,
+    createKelas,
+    updateKelas,
+    deleteKelas
+} from "../controllers/kelasController.js"
+
+const router = express.Router();
+
+router.get("/", getAllKelas);
+router.get("/:id", getKelasById);
+router.post("/", createKelas);
+router.patch("/:id", updateKelas);
+router.delete("/:id", deleteKelas);
+
+export default router
