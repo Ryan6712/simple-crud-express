@@ -17,33 +17,44 @@ model Mahasiswa {
   id Int @id @default(autoincrement())
   name String
   nim Int @unique
-  status status @default(alpa)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  Absens Absen[]
+
+  @@index([deletedAt])
 }
 
 enum status {
-  hadir
-  izin
-  alpa
+  HADIR
+  IZIN
+  ALPA
 }
 
-// model Kelas {
-//   id Int @id @default(autoincrement())
-//   name String
-//   createdAt DateTime @default(now())
-//   Absens Absen[]
-// }
+model Kelas {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  Absens Absen[]
 
-// model Absen {
-//   id Int @id @default(autoincrement())
-//   mahasiswaId Int
-//   kelasId Int
-//   date DateTime
-//   status String
+  @@index([deletedAt])
+}
 
-//   mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
-//   kelas Kelas @relation(fields: [kelasId], references: [id])
+model Absen {
+  id Int @id @default(autoincrement())
+  mahasiswaId Int
+  kelasId Int
+  date DateTime @db.Date
+  status status @default(ALPA)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 
-//   @@unique([mahasiswaId, kelasId, date])
-// }
+  mahasiswa Mahasiswa @relation(fields: [mahasiswaId], references: [id])
+  kelas Kelas @relation(fields: [kelasId], references: [id])
+
+  @@unique([mahasiswaId, kelasId, date])
+  @@index([deletedAt, date])
+}
